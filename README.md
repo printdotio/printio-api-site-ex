@@ -4,6 +4,7 @@ printio-api-site-ex
 Example of how to build a website based off of the obviously amazing [print.io api](http://print.io/api) and [pio.js](http://print.io/platform-web).
 
 ## What's Included?
+- an incredibly quick nodejs-based backend
 - fully responsive bootstrap 3-based site... ready for mobile/tablets!
 - an example products page leveraging the print.io api
 - an example product details page leveraging the print.io api
@@ -11,7 +12,7 @@ Example of how to build a website based off of the obviously amazing [print.io a
 - fully integrated pio.js web widget for easy product customization (yayyyyyy!)
 - facebook, pinterest, and twitter sharing
 - facebook and pinterest meta tags w/ product description to help their robots/crawlers read product data
-- SEO-friendly URLs and [schema.org](http://www.schema.org] compliant product markup for even more SEO juice
+- SEO-friendly URLs and [schema.org](http://www.schema.org/Product) compliant product markup for even more SEO juice
 - free beer
 
 ## Requirements
