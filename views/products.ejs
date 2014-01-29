@@ -1,0 +1,31 @@
+<% include _header.ejs %>
+<div class="container">
+    <h1>Products</h1>
+
+    <!--loop through products passed to us and render the "preview"-->
+    <% Products.forEach(function(product){
+        var img = product.Images.filter(function(i){
+           return i.ImageTypes.some(function(t){
+               return t==='AppFeatured';
+           })
+        })[0];
+
+        // dont show something without an image
+        if(typeof(img)==='undefined')
+            return true;
+    %>
+    <section class="product">
+        <a  href="/products/<%=: product.Name | urlify %>">
+        <img src="<%= img.Url %>" class="product__img">
+            <div class="product__desc">
+                <h4><%= product.Name %></h4>
+            </div>
+        </a>
+    </section>
+    <% }) %>
+
+</div>
+<% include _footer.ejs %>
+
+
+

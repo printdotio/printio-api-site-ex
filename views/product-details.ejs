@@ -1,0 +1,133 @@
+<% include _header.ejs %>
+<div class="container">
+    <section itemscope itemtype="http://schema.org/Product">
+
+        <!--begin google rich snippets data-->
+        <!--TODO: change this one to your company's name-->
+        <meta itemprop="brand" content="Print Site"/>
+        <meta itemprop="model" content="<%= Product.Name %>"/>
+        <meta itemprop="name" content="<%= Product.Name %>" />
+        <span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+            <meta itemprop="price" content="<%= Product.PriceInfo.Price %>" />
+            <meta itemprop="availability" content="Yes" />
+            <meta itemprop="priceCurrency" content="<%= Product.PriceInfo.CurrencyCode %>" />
+        </span>
+
+
+        <div class="row">
+
+            <!--the left side/product images-->
+            <section class="col-md-6 product-imgs">
+            <%
+                //
+                // create an array of images for this product
+                var images = Product.Images.reduce(function(r,i){
+                    //
+                    // select the largest image from the product images
+                    var hasImage = i.ImageTypes.some(function(t){ return t==="AppDetails";} );
+                    if(hasImage)
+                        r.push(i);
+                    return r;
+                },[])
+
+            %>
+                <!--the large, primary image-->
+                <img src="<%=: images | first | get:'Url' %>" itemprop="image" class="product-imgs__main js-main-img" />
+
+
+
+                <!--the smaller images of the product-->
+                <section class="product-imgs__other">
+                <%
+                    var imgCount = 0;
+                    images.forEach(function(image){
+                        imgCount++;
+                        // only show a max of 3 images
+                        if(imgCount>3) return;
+                %>
+                    <img src="<%= image.Url %>" itemprop="image" class="product-imgs__small js-possible-img" />
+                <%  }) %>
+                </section>
+            </section>
+
+
+            <section class="col-md-6 product-details">
+                <h1 class="product-details__title">Customizable <%= Product.Name %></h1>
+                <%
+                    var textContent = Product.Info.filter(function(i){
+                        return i.ContentType==="Text";
+                    })
+
+                    var listContent = Product.Info.filter(function(i){
+                        return i.ContentType==="List";
+                    })
+                %>
+                <p class="product-details__startprice"><em>Starting at <%= Product.RetailPrice.FormattedPrice %></em></p>
+                <p class="product-details__shortdesc"><%= Product.ShortDescription%></p>
+
+                <!--write out the "extra" text content describing the product-->
+                <% textContent.forEach(function(content){ %>
+                    <p><%= content.Content %></p>
+                <% }) %>
+
+                <div class="text-center product-details__create">
+                    <a class="btn btn-primary btn-lg js-pio-open" href="#" data-productid="<%= Product.Id %>">Create Your Own</a>
+                </div>
+            </section>
+
+        </div>
+        <div class="row secondary-row">
+            <section class="product-list col-md-6">
+                <!--write out the list-style content that describes the product-->
+                <h3 class="product-list__title">Details</h3>
+                <ul class="product-list__list">
+                    <% listContent.forEach(function(content){ %>
+                    <li><strong><%= content.Key %></strong> <%= content.Content[0] %></li>
+                    <% }) %>
+                </ul>
+            </section>
+
+            <!--here we use the shipestimate data from the API-->
+            <% if(typeof(ShipEstimate)!=='undefined'){ %>
+            <section class="product-shipping col-md-6">
+                <h3 class="product-shipping__title">Shipping Info</h3>
+                <li><strong>Est. Arrival</strong> <%= ShipEstimate.EstShipDays %> Days</li>
+                <li><strong>Est. Ship</strong> <%= ShipEstimate.MinPrice.FormattedPrice %> Days</li>
+                <li><strong>Shipping Information</strong> This item is in stock and ships within three business days.</li>
+                <li><strong>Return Policy</strong> We guarantee satisfaction.</li>
+                <li><strong>Availability</strong> This item ships internationally.</li>
+            </section>
+            <% } %>
+        </div>
+        <div class="row secondary-row">
+            <section class="col-md-6 product-social">
+                <h3 class="product-social__title">Social</h3>
+                <div class="product-social__container">
+
+                    <!--pinterest-->
+                    <a href="//www.pinterest.com/pin/create/button/?url=<%= url %>&media=<%=: images | first | get:'Url' %>&description=<%= Product.ShortDescription %>" data-pin-do="buttonPin" data-pin-config="above"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_gray_20.png" /></a>
+                    <!-- Please call pinit.js only once per page -->
+                    <script type="text/javascript" async src="//assets.pinterest.com/js/pinit.js"></script>
+
+
+                    <!--twitter-->
+                    <!--TODO: change data-url to your site's url-->
+                    <a href="https://twitter.com/share" class="twitter-share-button" style="padding-left:20px;" data-count="vertical" data-lang="en" data-url="<%= url %>">Tweet</a>
+                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+
+                    <!--facebook-->
+                    <!--this will not show up until it is deployed to somewhere on the web that FB can touch-->
+                    <!--TODO: change the facebook APP id in the _header.ejs file-->
+                    <div style="margin-left:20px;" class="fb-share-button" data-href="<%= url %>" data-type="button_count"></div>
+
+                </div>
+            </section>
+        </div>
+
+
+
+    </section>
+
+</div>
+<% include _footer.ejs %>
