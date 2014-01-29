@@ -13,6 +13,7 @@ Example of how to build a website based off of the obviously amazing [print.io a
 - facebook, pinterest, and twitter sharing
 - facebook and pinterest meta tags w/ product description to help their robots/crawlers read product data
 - SEO-friendly URLs and [schema.org](http://www.schema.org/Product) compliant product markup for even more SEO juice
+- unit tested print.io api library ( run `mocha` from the project root to run the tests)
 - free beer
 
 ## Requirements
