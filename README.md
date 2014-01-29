@@ -31,5 +31,9 @@ Example of how to build a website based off of the obviously amazing [print.io a
 2. run `node server`
 3. open your browser to `http://localhost:1337`
 
+## TODOs
+
+Search the codebase for "TODO" to find small items one should take care of before deploying to production (like changing facebook app ID, adding in print.io api key, etc).
+
 
 *License === MIT*

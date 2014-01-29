@@ -4,8 +4,10 @@
 var express = require('express'),
     path = require('path'),
     ejs = require('ejs'),
-    CachedPrintioService = require('./lib/cachedprintioservice.js'),
-    pio = new CachedPrintioService({
+    CachedPrintioService = require('./lib/cachedprintioservice.js');
+
+// TODO: add in your recipeId
+var pio = new CachedPrintioService({
         recipeId:'f255af6f-9614-4fe2-aa8b-1b77b936d9d6',
         url:'https://api.print.io/api/v/1/source/widget/'
     });
@@ -27,10 +29,6 @@ app.use('/public',express.static(path.join(__dirname , '/public')));
 app.get('/',function(req,res){
     return res.redirect('/products');
 });
-
-//app.get('/products',function(req,res){
-//   return res.redirect('/products/en/us/usd');
-//});
 
 app.get('/products',function(req,res){
     var pageData = {
